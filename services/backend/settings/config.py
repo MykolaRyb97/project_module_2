@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
 class AppConfig(BaseSettings):
@@ -14,10 +14,11 @@ class AppConfig(BaseSettings):
     MAX_FILE_SIZE: int = 5 * 1024 * 1024
     SUPPORTED_FORMATS: set[str] = {'.jpg', '.png', '.gif'}
 
-    model_settings = SettingsConfigDict(
+    model_config = SettingsConfigDict(
         env_file=BASE_DIR / str(".env"),
         enable_decoding="utf-8",
     )
 
 
 config = AppConfig()
+

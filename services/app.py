@@ -14,8 +14,8 @@ from PIL import Image
 
 app = FastAPI(title="Upload Server", description="Simple file upload service")
 
-os.makedirs(config.IMAGES_DIR, exist_ok=True)
-app.mount("/images", StaticFiles(directory=config.IMAGES_DIR), name="images")
+os.makedirs(config.IMAGE_DIR, exist_ok=True)
+app.mount("/images", StaticFiles(directory=config.IMAGE_DIR), name="images")
 
 
 @app.get("/")

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Hosting</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Image Hosting Service</h1>
+    <p>Завантажуй зображення та отримуй пряме посилання 🌐</p>
+  </header>
+
+  <main>
+    <div class="upload-container">
+      <input type="file" id="fileInput" accept="image/*" hidden>
+      <label for="fileInput" class="upload-btn">Вибрати зображення</label>
+      <button id="uploadBtn" disabled>Завантажити</button>
+    </div>
+
+    <div id="previewContainer" class="hidden">
+      <h2>Попередній перегляд</h2>
+      <img id="previewImage" src="" alt="Попередній перегляд">
+      <p id="imageLink"></p>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Image Hosting Project</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
