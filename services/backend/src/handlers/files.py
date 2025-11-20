@@ -1,7 +1,7 @@
 import os
 from datetime import datetime, UTC
 
-from services.backend.src.settings.config import config
+from settings.config import config
 
 
 def list_uploaded_images() -> list[dict[str, str | int]]:
@@ -16,7 +16,7 @@ def list_uploaded_images() -> list[dict[str, str | int]]:
         raise PermissionError("Permission denied to access images directory.")
 
     for filename in filenames:
-        filepath = os.path.join(config.IMAGE_DIR, filename)
+        filepath = config.IMAGE_DIR / filename
         ext = os.path.splitext(filename)[1].lower()
 
         if ext in config.SUPPORTED_FORMATS and os.path.isfile(filepath):

@@ -66,12 +66,7 @@ async def get_uploads():
 @app.post("/upload/")
 async def upload_file(file: UploadFile = File(...)):
     try:
-        saved_info = handle_uploaded_file(
-            {
-                "filename": file.filename,
-                "file": file.file.read()
-            }
-        )
+        saved_info = handle_uploaded_file(file)
     except MultipleFilesUploadError:
         raise HTTPException(status_code=400, detail="Only one file allowed.")
     except APIError as e:
@@ -79,6 +74,7 @@ async def upload_file(file: UploadFile = File(...)):
 
     logger.info(f"File '{saved_info['filename']}' uploaded successfully.")
     return saved_info
+
 
 
 # -------------------------------------------------------------

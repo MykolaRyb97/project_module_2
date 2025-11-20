@@ -7,7 +7,8 @@ import logging
 
 from pathlib import Path
 
-from services.backend.src.settings.config import config
+from settings.config import config
+
 
 
 def get_logger(name: str = __name__) -> logging.Logger:

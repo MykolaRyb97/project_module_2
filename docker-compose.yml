@@ -5,12 +5,15 @@ services:
       context: services/backend
       dockerfile: Dockerfile
     container_name: upload-server
-    command: [ "python", "app.py" ]
+    command:  ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
     env_file:
-      - services/backend/.env
+        - .env
+
     environment:
       - LOG_LEVEL=debug
-      - PYTHONPATH=/usr/src/upload-server
+      - PYTHONPATH=/usr/src
+
     volumes:
       - ./services/backend/src:/usr/src/upload-server
       - ./images:/usr/src/images

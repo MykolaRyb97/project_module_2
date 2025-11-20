@@ -1,9 +1,6 @@
 FROM python:3.12.9
 
 # Python configuration
-# Don't write .pyc files
-# Output logs immediately
-# Allow pip to cache packages
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PIP_NO_CACHE_DIR=off
@@ -27,3 +24,9 @@ WORKDIR /usr/src/upload-server
 
 # Copy source code into the container
 COPY src .
+
+# Відкриваємо порт для FastAPI
+EXPOSE 8000
+
+# Запуск через Uvicorn
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
