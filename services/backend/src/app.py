@@ -87,7 +87,7 @@ async def delete_upload(filename: str):
     if ext not in config.SUPPORTED_FORMATS:
         raise HTTPException(status_code=400, detail="Unsupported file format.")
 
-    filepath = os.path.join(config.IMAGES_DIR, filename)
+    filepath = os.path.join(config.IMAGE_DIR, filename)
 
     if not os.path.isfile(filepath):
         raise HTTPException(status_code=404, detail="File not found.")
