@@ -19,7 +19,7 @@ class AppConfig(BaseSettings):
     """Application settings loaded from environment variables.
 
     Attributes:
-        IMAGES_DIR (str): Directory path where uploaded images are stored.
+        IMAGE_DIR (str): Directory path where uploaded images are stored.
         WEB_SERVER_WORKERS (int): Number of worker processes to run for the HTTP server.
         WEB_SERVER_START_PORT (int): Starting port number for worker processes.
         LOG_DIR (Path): Directory path where log files are saved.
@@ -38,7 +38,7 @@ class AppConfig(BaseSettings):
     """
 
 
-    IMAGES_DIR: str
+    IMAGE_DIR: str
     LOG_DIR: Path
     WEB_SERVER_WORKERS: int
     WEB_SERVER_START_PORT: int

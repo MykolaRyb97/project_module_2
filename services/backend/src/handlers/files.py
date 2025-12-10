@@ -46,7 +46,7 @@ class FileHandler(FileHandlerInterface):
 
     def __init__(
             self,
-            images_dir: str = config.IMAGES_DIR,
+            images_dir: str = config.IMAGE_DIR,
             max_file_size: int = config.MAX_FILE_SIZE,
             supported_formats: set[str] = config.SUPPORTED_FORMATS
     ):
@@ -163,3 +163,21 @@ class FileHandler(FileHandlerInterface):
             raise PermissionDeniedError("delete file")
         except Exception as e:
             raise APIError(f"Failed to delete file: {str(e)}")
+
+def list_uploaded_images(self) -> list[str]:
+        """
+        Return a list of image filenames stored in the images directory.
+        """
+        images_dir = self._images_dir
+
+        if not os.path.isdir(images_dir):
+            raise FileNotFoundError(f"Images directory not found: {images_dir}")
+
+        files = [
+            f for f in os.listdir(images_dir)
+            if os.path.isfile(os.path.join(images_dir, f))
+               and os.path.splitext(f)[1].lower() in self._supported_formats
+        ]
+
+        return files
+
