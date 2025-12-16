@@ -38,7 +38,7 @@ class AppConfig(BaseSettings):
     """
 
 
-    IMAGE_DIR: str
+    IMAGE_DIR: Path
     LOG_DIR: Path
     WEB_SERVER_WORKERS: int
     WEB_SERVER_START_PORT: int

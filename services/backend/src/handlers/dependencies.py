@@ -31,7 +31,7 @@ def get_file_handler() -> FileHandlerInterface:
     global _file_handler
     if _file_handler is None:
         _file_handler = FileHandler(
-            images_dir=config.IMAGES_DIR,
+            images_dir=config.IMAGE_DIR,
             max_file_size=config.MAX_FILE_SIZE,
             supported_formats=config.SUPPORTED_FORMATS
         )

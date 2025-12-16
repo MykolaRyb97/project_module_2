@@ -32,6 +32,7 @@ from interfaces.protocols import SupportsWrite
 from interfaces.handlers import FileHandlerInterface
 
 
+
 class FileHandler(FileHandlerInterface):
     """Service for managing image files throughout their lifecycle.
 
@@ -164,20 +165,16 @@ class FileHandler(FileHandlerInterface):
         except Exception as e:
             raise APIError(f"Failed to delete file: {str(e)}")
 
-def list_uploaded_images(self) -> list[str]:
-        """
-        Return a list of image filenames stored in the images directory.
-        """
-        images_dir = self._images_dir
+def list_uploaded_images() -> list[str]:
+        images_dir = config.IMAGE_DIR
 
-        if not os.path.isdir(images_dir):
-            raise FileNotFoundError(f"Images directory not found: {images_dir}")
+        # якщо директорії немає — створюємо, щоб не було 500
+        os.makedirs(images_dir, exist_ok=True)
 
         files = [
             f for f in os.listdir(images_dir)
             if os.path.isfile(os.path.join(images_dir, f))
-               and os.path.splitext(f)[1].lower() in self._supported_formats
+               and os.path.splitext(f)[1].lower() in config.SUPPORTED_FORMATS
         ]
 
         return files
-

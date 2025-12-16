@@ -33,7 +33,7 @@ def handle_uploaded_file(upload_file: UploadFile) -> dict[str, str]:
 
     # Generate unique filename
     unique_name = f"{uuid.uuid4()}{ext}"
-    file_path = config.IMAGE_DIR / unique_name
+    file_path = config.IMAGE_DIR/unique_name
 
     # Save file
     with open(file_path, "wb") as f:
