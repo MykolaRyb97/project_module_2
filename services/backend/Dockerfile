@@ -26,7 +26,7 @@ WORKDIR /usr/src/upload-server
 COPY src .
 
 # Відкриваємо порт для FastAPI
-EXPOSE 8000-8010
+EXPOSE 8000-8009
 
 # Запуск через Uvicorn
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -5,11 +5,14 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 
+
+
 from settings.config import config
 from settings.logging_config import get_logger
 from handlers.files import list_uploaded_images
 from handlers.upload import handle_uploaded_file
 from exceptions.api_errors import APIError, MultipleFilesUploadError
+
 
 logger = get_logger(__name__)
 
@@ -100,3 +103,6 @@ async def delete_upload(filename: str):
         raise HTTPException(status_code=500, detail=f"Internal server error: {e}")
 
     return {"message": f"File '{filename}' deleted successfully."}
+
+
+
