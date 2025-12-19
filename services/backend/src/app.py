@@ -49,19 +49,21 @@ async def root():
 # GET /upload/
 # -------------------------------------------------------------
 @app.get("/upload/")
-async def get_uploads():
+async def get_uploads(
+    page: int = 1,
+    per_page: int = 8,
+    order: str = "desc",
+):
     try:
-        files = list_uploaded_images()
+        return list_uploaded_images(
+            page=page,
+            per_page=per_page,
+            order=order,
+        )
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Images directory not found.")
     except PermissionError:
         raise HTTPException(status_code=500, detail="Permission denied.")
-
-    if not files:
-        raise HTTPException(status_code=404, detail="No images found.")
-
-    return files
-
 
 # -------------------------------------------------------------
 # POST /upload/

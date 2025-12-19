@@ -13,6 +13,7 @@ and maintainable.
 import os
 import uuid
 import shutil
+import math
 from typing import cast, List, Callable, Any
 
 from PIL import Image, UnidentifiedImageError
@@ -165,16 +166,45 @@ class FileHandler(FileHandlerInterface):
         except Exception as e:
             raise APIError(f"Failed to delete file: {str(e)}")
 
-def list_uploaded_images() -> list[str]:
-        images_dir = config.IMAGE_DIR
+def list_uploaded_images(page: int = 1, per_page: int = 8, order: str = "desc") -> dict:
+    """
+    Повертає список картинок у форматі, який очікує фронт:
+    {
+      "items": [{"filename": "...", "url": "/images/..."}],
+      "pagination": {"total": N, "pages": P, "page": page, "per_page": per_page, "order": order}
+    }
+    """
+    images_dir = config.IMAGE_DIR
+    os.makedirs(images_dir, exist_ok=True)
 
-        # якщо директорії немає — створюємо, щоб не було 500
-        os.makedirs(images_dir, exist_ok=True)
+    files = [
+        f for f in os.listdir(images_dir)
+        if os.path.isfile(os.path.join(images_dir, f))
+        and os.path.splitext(f)[1].lower() in config.SUPPORTED_FORMATS
+    ]
 
-        files = [
-            f for f in os.listdir(images_dir)
-            if os.path.isfile(os.path.join(images_dir, f))
-               and os.path.splitext(f)[1].lower() in config.SUPPORTED_FORMATS
-        ]
+    # сортування: asc = старіші → новіші, desc = новіші → старіші
+    files.sort(
+        key=lambda fn: os.path.getmtime(os.path.join(images_dir, fn)),
+        reverse=(order != "asc"),
+    )
 
-        return files
+    total = len(files)
+    pages = max(1, math.ceil(total / per_page)) if total else 1
+
+    start = (page - 1) * per_page
+    end = start + per_page
+    slice_files = files[start:end] if start < total else []
+
+    items = [{"filename": fn, "url": f"/images/{fn}"} for fn in slice_files]
+
+    return {
+        "items": items,
+        "pagination": {
+            "total": total,
+            "pages": pages,
+            "page": page,
+            "per_page": per_page,
+            "order": order,
+        },
+    }
