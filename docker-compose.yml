@@ -50,9 +50,9 @@ services:
     restart: unless-stopped
     container_name: postgres-upload-server
     env_file:
-      - ./services/backend/.env
+      - ./services/pgbouncer/.env
     ports:
-      - "15432:5432"
+      - "5432:5432"
     volumes:
       - ./init-sql:/docker-entrypoint-initdb.d
       - postgres_upload_server_data:/var/lib/postgresql/data/
@@ -72,7 +72,7 @@ services:
     container_name: pgbouncer-upload-server
     restart: always
     env_file:
-           - ./services/pgbouncer/.env
+      - ./services/pgbouncer/.env
     ports:
       - "6432:6432"
     volumes:
